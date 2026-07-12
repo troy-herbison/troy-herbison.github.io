@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Volli</title>
+    <meta name="description" content="Learn more about Volli — the app that helps you find and book pickleball, tennis, basketball, and more.">
+
+    <meta property="og:title" content="About Volli">
+    <meta property="og:description" content="Learn more about Volli — the app that helps you find and book pickleball, tennis, basketball, and more.">
+    <meta property="og:image" content="logo.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+        :root {
+            --volli-dark: #14532d;
+            --volli-mid: #4d7c0f;
+            --volli-bright: #84cc16;
+            --volli-bright-hover: #65a30d;
+        }
+        html, body { height: 100%; }
+        body {
+            font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+            color: var(--volli-dark);
+            background:
+                radial-gradient(1200px 600px at 20% -10%, #d9f99d 0%, transparent 60%),
+                radial-gradient(900px 500px at 90% 110%, #a7f3d0 0%, transparent 60%),
+                linear-gradient(180deg, #f7fee7 0%, #ecfccb 50%, #d1fae5 100%);
+            background-attachment: fixed;
+        }
+        .logo-shadow { box-shadow: 0 12px 30px rgba(20, 83, 45, 0.18); }
+        .about-image { box-shadow: 0 10px 25px rgba(20, 83, 45, 0.15); }
+
+        .tab-nav {
+            background-color: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(20, 83, 45, 0.1);
+            border-radius: 9999px;
+            padding: 4px;
+            display: inline-flex;
+            gap: 4px;
+        }
+        .tab-nav a {
+            padding: 8px 20px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--volli-dark);
+            transition: background-color 150ms ease, transform 150ms ease;
+            text-decoration: none;
+        }
+        .tab-nav a:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        .tab-nav a.active {
+            background-color: var(--volli-bright);
+            color: var(--volli-dark);
+            box-shadow: 0 2px 8px rgba(132, 204, 22, 0.35);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center min-h-screen px-5 py-10">
+
+    <main class="flex flex-col items-center w-full max-w-md flex-1">
+
+        <nav class="tab-nav mb-7" aria-label="Primary">
+            <a href="index.html">Home</a>
+            <a href="about.html" class="active" aria-current="page">About</a>
+        </nav>
+
+        <img src="logo.jpg" alt="Volli logo" class="w-24 h-24 rounded-3xl logo-shadow mb-4 object-cover">
+
+        <h1 class="text-3xl font-bold mb-2" style="color: var(--volli-dark);">About Volli</h1>
+
+        <p class="text-center text-base font-medium leading-snug px-2 mb-8" style="color: var(--volli-dark);">
+            The easiest way to find and book courts for the sports you love.
+        </p>
+
+        <div class="w-full flex flex-col gap-6">
+            <img src="about_page_1.jpg" alt="About Volli — image 1 of 6" class="w-full rounded-2xl about-image">
+            <img src="about_page_2.jpg" alt="About Volli — image 2 of 6" class="w-full rounded-2xl about-image" loading="lazy">
+            <img src="about_page_3.jpg" alt="About Volli — image 3 of 6" class="w-full rounded-2xl about-image" loading="lazy">
+            <img src="about_page_4.jpg" alt="About Volli — image 4 of 6" class="w-full rounded-2xl about-image" loading="lazy">
+            <img src="about_page_5.jpg" alt="About Volli — image 5 of 6" class="w-full rounded-2xl about-image" loading="lazy">
+            <img src="about_page_6.jpg" alt="About Volli — image 6 of 6" class="w-full rounded-2xl about-image" loading="lazy">
+        </div>
+
+    </main>
+
+    <footer class="mt-10 pt-6 text-xs text-center w-full max-w-md" style="color: rgba(20, 83, 45, 0.6);">
+        <p>© Volli 2026 · Hosted with <a href="https://pages.github.com" class="underline decoration-dotted underline-offset-2 hover:decoration-solid">GitHub Pages</a></p>
+    </footer>
+
+</body>
+</html>

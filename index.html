@@ -55,11 +55,44 @@
         }
         .logo-shadow { box-shadow: 0 12px 30px rgba(20, 83, 45, 0.18); }
         .video-frame { box-shadow: 0 12px 30px rgba(20, 83, 45, 0.18); }
+
+        .tab-nav {
+            background-color: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(20, 83, 45, 0.1);
+            border-radius: 9999px;
+            padding: 4px;
+            display: inline-flex;
+            gap: 4px;
+        }
+        .tab-nav a {
+            padding: 8px 20px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--volli-dark);
+            transition: background-color 150ms ease, transform 150ms ease;
+            text-decoration: none;
+        }
+        .tab-nav a:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        .tab-nav a.active {
+            background-color: var(--volli-bright);
+            color: var(--volli-dark);
+            box-shadow: 0 2px 8px rgba(132, 204, 22, 0.35);
+        }
     </style>
 </head>
 <body class="flex flex-col items-center min-h-screen px-5 py-10">
 
     <main class="flex flex-col items-center w-full max-w-md flex-1">
+
+        <nav class="tab-nav mb-7" aria-label="Primary">
+            <a href="index.html" class="active" aria-current="page">Home</a>
+            <a href="about.html">About</a>
+        </nav>
 
         <img src="logo.jpg" alt="Volli logo" class="w-28 h-28 rounded-3xl logo-shadow mb-5 object-cover">
 
