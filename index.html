@@ -83,6 +83,142 @@
             color: var(--volli-dark);
             box-shadow: 0 2px 8px rgba(132, 204, 22, 0.35);
         }
+
+        /* --- Email-capture popup (keep identical in index.html & about.html — see CLAUDE.md) --- */
+        .volli-modal-overlay {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 50;
+            background: rgba(20, 83, 45, 0.45);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        .volli-modal-overlay[hidden] { display: none; }
+        .volli-modal-card {
+            position: relative;
+            width: 100%;
+            max-width: 24rem;
+            background: #ffffff;
+            color: var(--volli-dark);
+            border-radius: 1.25rem;
+            padding: 1.75rem;
+            box-shadow: 0 12px 30px rgba(20, 83, 45, 0.18);
+            animation: volli-modal-in 200ms ease;
+        }
+        @keyframes volli-modal-in {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .volli-modal-card { animation: none; }
+        }
+        .volli-modal-close {
+            position: absolute;
+            top: 0.85rem;
+            right: 0.85rem;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            background: transparent;
+            border-radius: 9999px;
+            font-size: 1.5rem;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--volli-dark);
+            transition: color 150ms ease, background-color 150ms ease;
+        }
+        .volli-modal-close:hover {
+            color: var(--volli-mid);
+            background-color: rgba(20, 83, 45, 0.06);
+        }
+        .volli-modal-card h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-right: 1.5rem;
+        }
+        .volli-modal-desc {
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+            color: rgba(20, 83, 45, 0.75);
+        }
+        .volli-field { margin-top: 1.1rem; border: 0; padding: 0; margin-left: 0; margin-right: 0; }
+        .volli-label,
+        .volli-field legend {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+        .volli-input {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            border: 1px solid rgba(20, 83, 45, 0.2);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            color: var(--volli-dark);
+            background: #f7fee7;
+            transition: border-color 150ms ease, box-shadow 150ms ease;
+        }
+        .volli-input:focus {
+            outline: none;
+            border-color: var(--volli-bright);
+            box-shadow: 0 0 0 3px rgba(132, 204, 22, 0.3);
+        }
+        .volli-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .volli-toggle-option { flex: 1; }
+        .volli-toggle input {
+            position: absolute;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        .volli-toggle label {
+            display: block;
+            text-align: center;
+            padding: 0.6rem 0.5rem;
+            border: 1px solid rgba(20, 83, 45, 0.2);
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+        }
+        .volli-toggle input:checked + label {
+            background-color: var(--volli-bright);
+            border-color: var(--volli-bright);
+            color: var(--volli-dark);
+            box-shadow: 0 2px 8px rgba(132, 204, 22, 0.35);
+        }
+        .volli-toggle input:focus-visible + label {
+            box-shadow: 0 0 0 3px rgba(132, 204, 22, 0.4);
+        }
+        .volli-error {
+            margin-top: 0.75rem;
+            color: #b91c1c;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .volli-submit {
+            width: 100%;
+            margin-top: 1.25rem;
+            border: none;
+            cursor: pointer;
+        }
+        .volli-hidden-iframe { display: none; }
     </style>
 </head>
 <body class="flex flex-col items-center min-h-screen px-5 py-10">
@@ -148,6 +284,169 @@
     <footer class="mt-10 pt-6 text-xs text-center w-full max-w-md" style="color: rgba(20, 83, 45, 0.6);">
         <p>© Volli 2026 · Hosted with <a href="https://pages.github.com" class="underline decoration-dotted underline-offset-2 hover:decoration-solid">GitHub Pages</a></p>
     </footer>
+
+    <!-- Email-capture popup — keep identical in index.html & about.html (see CLAUDE.md) -->
+    <div class="volli-modal-overlay" id="volli-modal" hidden>
+        <div class="volli-modal-card" role="dialog" aria-modal="true" aria-labelledby="volli-modal-title" aria-describedby="volli-modal-desc">
+            <button type="button" class="volli-modal-close" id="volli-modal-close" aria-label="Close">&times;</button>
+
+            <div id="volli-form-state">
+                <h2 id="volli-modal-title">Get early access to Volli</h2>
+                <p class="volli-modal-desc" id="volli-modal-desc">Join the list and we'll email you when we launch.</p>
+
+                <!--
+                  Wired to MailerLite embedded form (account 2505861, form 192833869259474414).
+                  Fields map to the account's: email -> fields[email], Player/Facility ->
+                  fields[facility_or_player]. reCAPTCHA must be OFF on this form in MailerLite
+                  for the direct POST below to be accepted.
+                -->
+                <form id="volli-form" action="https://assets.mailerlite.com/jsonp/2505861/forms/192833869259474414/subscribe" method="post" target="volli-ml-iframe">
+                    <div class="volli-field">
+                        <label class="volli-label" for="volli-email">Email</label>
+                        <input class="volli-input" id="volli-email" name="fields[email]" type="email" required autocomplete="email" placeholder="you@example.com">
+                    </div>
+
+                    <fieldset class="volli-field">
+                        <legend>I'm a…</legend>
+                        <div class="volli-toggle">
+                            <div class="volli-toggle-option">
+                                <input type="radio" id="volli-type-player" name="fields[facility_or_player]" value="Player" required>
+                                <label for="volli-type-player">Player</label>
+                            </div>
+                            <div class="volli-toggle-option">
+                                <input type="radio" id="volli-type-facility" name="fields[facility_or_player]" value="Facility">
+                                <label for="volli-type-facility">Facility</label>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- MailerLite required hidden inputs (from the embed snippet). Note: this form's reCAPTCHA must be turned OFF in MailerLite for a direct post to succeed. -->
+                    <input type="hidden" name="ml-submit" value="1">
+                    <input type="hidden" name="anticsrf" value="true">
+
+                    <p class="volli-error" id="volli-error" role="alert" hidden>Please enter a valid email and choose Player or Facility.</p>
+
+                    <button type="submit" class="btn-primary volli-submit rounded-full py-3 px-6 font-semibold">Notify me</button>
+                </form>
+            </div>
+
+            <div id="volli-submitting-state" hidden>
+                <h2>Submitting…</h2>
+                <p class="volli-modal-desc">One moment while we add you to the list.</p>
+            </div>
+
+            <div id="volli-success-state" hidden>
+                <h2>You're on the list! 🎉</h2>
+                <p class="volli-modal-desc">Thanks for signing up — we'll be in touch soon. (If prompted, check your inbox to confirm.)</p>
+                <button type="button" class="btn-primary volli-submit rounded-full py-3 px-6 font-semibold" id="volli-success-close">Done</button>
+            </div>
+        </div>
+        <iframe name="volli-ml-iframe" class="volli-hidden-iframe" title="Signup submit target" aria-hidden="true" tabindex="-1"></iframe>
+    </div>
+
+    <script>
+        (function () {
+            var STORAGE_KEY = 'volli_email_popup_seen';
+            var DELAY_MS = 4000;
+            var SUBMIT_TIMEOUT_MS = 8000;
+
+            var overlay = document.getElementById('volli-modal');
+            if (!overlay) return;
+            var card = overlay.querySelector('.volli-modal-card');
+            var form = document.getElementById('volli-form');
+            var email = document.getElementById('volli-email');
+            var errorEl = document.getElementById('volli-error');
+            var iframe = overlay.querySelector('.volli-hidden-iframe');
+            var formState = document.getElementById('volli-form-state');
+            var submittingState = document.getElementById('volli-submitting-state');
+            var successState = document.getElementById('volli-success-state');
+            var closeBtn = document.getElementById('volli-modal-close');
+            var successClose = document.getElementById('volli-success-close');
+
+            var lastFocused = null;
+            var successTimer = null;
+
+            function seen() {
+                try { return localStorage.getItem(STORAGE_KEY) === '1'; }
+                catch (e) { return true; } // fail-safe: don't nag if storage is blocked
+            }
+            function markSeen() {
+                try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+            }
+
+            function visibleFocusables() {
+                return Array.prototype.filter.call(
+                    card.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'),
+                    function (el) { return el.offsetParent !== null; }
+                );
+            }
+
+            function onKeydown(e) {
+                if (e.key === 'Escape') { close(); return; }
+                if (e.key === 'Tab') {
+                    var f = visibleFocusables();
+                    if (!f.length) return;
+                    var first = f[0], last = f[f.length - 1];
+                    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+                    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+                }
+            }
+
+            function open() {
+                if (seen()) return;
+                markSeen(); // dismissing without submitting still counts as seen
+                lastFocused = document.activeElement;
+                overlay.hidden = false;
+                document.body.style.overflow = 'hidden';
+                document.addEventListener('keydown', onKeydown);
+                (email || closeBtn).focus();
+            }
+
+            function close() {
+                overlay.hidden = true;
+                document.body.style.overflow = '';
+                document.removeEventListener('keydown', onKeydown);
+                if (successTimer) { clearTimeout(successTimer); successTimer = null; }
+                if (lastFocused && lastFocused.focus) lastFocused.focus();
+            }
+
+            function showSuccess() {
+                if (successTimer) { clearTimeout(successTimer); successTimer = null; }
+                submittingState.hidden = true;
+                formState.hidden = true;
+                successState.hidden = false;
+                if (successClose) successClose.focus();
+            }
+
+            closeBtn.addEventListener('click', close);
+            if (successClose) successClose.addEventListener('click', close);
+            overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+
+            form.addEventListener('submit', function (e) {
+                var typeChosen = !!form.querySelector('input[name="fields[facility_or_player]"]:checked');
+                if (!email.checkValidity() || !typeChosen) {
+                    e.preventDefault();
+                    errorEl.hidden = false;
+                    if (!email.checkValidity()) email.focus();
+                    return;
+                }
+                // valid: let the native POST fire into the hidden iframe (no preventDefault)
+                errorEl.hidden = true;
+                markSeen();
+                formState.hidden = true;
+                submittingState.hidden = false;
+                iframe.addEventListener('load', showSuccess, { once: true });
+                successTimer = setTimeout(showSuccess, SUBMIT_TIMEOUT_MS);
+            });
+
+            function schedule() { if (!seen()) setTimeout(open, DELAY_MS); }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', schedule);
+            } else {
+                schedule();
+            }
+        })();
+    </script>
 
 </body>
 </html>
