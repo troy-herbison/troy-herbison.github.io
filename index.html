@@ -367,11 +367,14 @@
             var successTimer = null;
 
             function seen() {
-                try { return localStorage.getItem(STORAGE_KEY) === '1'; }
-                catch (e) { return true; } // fail-safe: don't nag if storage is blocked
+                try { if (localStorage.getItem(STORAGE_KEY) === '1') return true; } catch (e) {}
+                return document.cookie.indexOf(STORAGE_KEY + '=1') !== -1;
             }
             function markSeen() {
                 try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+                // Cookie fallback: shared across every page on the domain, and works in
+                // private-browsing modes where localStorage.setItem can fail silently.
+                try { document.cookie = STORAGE_KEY + '=1; path=/; max-age=31536000; SameSite=Lax'; } catch (e) {}
             }
 
             function visibleFocusables() {
